@@ -17,4 +17,5 @@ dist/
 .vscode/
 
 # Credentials
-.git-credentials
+.git-credentials.env
+src/utils/open_router/output.txt
