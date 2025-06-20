@@ -1,7 +1,0 @@
-Here is your code:
-```python
-print("Hello world")
-```
-If you can read this, the test passed.
-Prompt was:
-Write a Hello World script in Python.
