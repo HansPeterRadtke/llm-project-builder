@@ -1,66 +1,44 @@
-CapOv — Captain Obvious
+LLM Project Builder
 
-Fixes the dumbest, most obvious Python code errors automatically.
+Generates full project scaffolding and code from a prompt — powered by LLMs.
 
-CapOv corrects only the 100% safe stuff: missing imports, duplicate imports, unclosed brackets, and more — with zero assumptions.
+LLM Project Builder creates complete Python projects from high-level descriptions, generating modules, folder structures, and even configurations.
 
 ---
 
-🔧 Installation
+🛠️ Installation
 
-    pip install capov
+    pip install llm-project-builder
 
 ---
 
 🚀 Example usage
 
-    from capov.fixers import process
+    from llm_project_builder import generate_project
 
-    code = '''
-    import os
-    import os
-    x = [1, 2, 3,
-    print(json.dumps(x)
-    '''
+    project_description = """
+    A REST API using FastAPI and SQLite for managing tasks.
+    """
 
-    fixed = process(code)
-    print(fixed)
-
-Command-line:
-
-    python -m capov your_script.py [options]
-
-Options:
-- --in-place → Overwrite the input file
-- --output FILENAME → Write fixed code to a separate file
-- --backup → Create a .bak backup before overwrite
-- --verbose → Print debug messages
-- --log FILE → Log to specified log file
+    generate_project(prompt=project_description)
 
 ---
 
-🧪 Run tests
+🧪 Testing
 
-To verify installation and test functionality:
+Run included tests to validate functionality:
 
-    python3 -m capov.tests
-
----
-
-🗂 Project structure
-
-- capov/ — main package
-  - fixers.py — bug fixing logic
-  - __main__.py — CLI entry point
-  - example.py — example usage
-  - tests/
-    - test_cli_full.py — full run tests
-    - test_cli_params.py — CLI parameter tests
-    - test_module_usage.py — module usage tests
-    - faulty_scripts/ — broken Python samples
+    python3 -m llm_project_builder.tests
 
 ---
 
-CapOv is your cleanup butler. Let him sweep the dumb bugs so you don't have to.
+🗂️ Project structure
 
-Submit bugs or contribute: https://github.com/HansPeterRadtke/capov
+- llm_project_builder/ — main package
+  - core.py — main logic (placeholder)
+  - __main__.py — CLI entry point (placeholder)
+  - tests/ — test suite
+
+---
+
+More coming soon. Contribute or report issues at: https://github.com/HansPeterRadtke/llm-project-builder
