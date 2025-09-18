@@ -1,2 +1,3 @@
-# Auto-generated test prompt for OpenRouter
+# Auto-generated test prompt for MakeCode
 Write a simple Hello World program in Python.
+
