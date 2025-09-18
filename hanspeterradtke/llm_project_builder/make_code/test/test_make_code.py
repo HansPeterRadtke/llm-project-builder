@@ -1,3 +1,4 @@
+print("TEST_SCRIPT_START")
 import os
 
 def test_make_code():
@@ -6,7 +7,7 @@ def test_make_code():
   # Enable test mode
   os.environ["LLM_TEST_MODE"] = "true"
 
-  from make_code import make_code
+  from hanspeterradtke.llm_project_builder import make_code
 
   prompt  = "Write a Python program that prints Hello Test"
   result  = make_code(prompt)
