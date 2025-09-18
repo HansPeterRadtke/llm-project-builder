@@ -1,73 +1,27 @@
-#!/usr/bin/env python3
-import subprocess
-import sys
-from pathlib import Path
-from utils.parser import extract_python
-
-SCRIPT_DIR     = Path(__file__).resolve().parent
-UTILS_DIR      = SCRIPT_DIR.parent / "utils"
-OPEN_ROUTER    = UTILS_DIR / "open_router" / "__main__.py"
-PARSER_OUTPUT  = UTILS_DIR / "open_router" / "output.txt"
-PROMPT_FILE    = UTILS_DIR / "open_router" / "prompt.txt"
+from hanspeterradtke.utils.parser import extract_python
 
 
-def write_prompt(prompt: str):
-  print("[DEBUG] write_prompt started")
-  try:
-    PROMPT_FILE.write_text(prompt, encoding="utf-8")
-    print(f"[DEBUG] Prompt written to {PROMPT_FILE}")
-  except Exception as e:
-    print(f"[ERROR] Failed to write prompt: {e}")
-    raise
-  print("[DEBUG] write_prompt finished")
-
-
-def run_open_router():
-  print("[DEBUG] run_open_router started")
-  try:
-    subprocess.run([sys.executable, str(OPEN_ROUTER)], check=True)
-    print("[DEBUG] OpenRouter run completed")
-  except subprocess.CalledProcessError as e:
-    print(f"[ERROR] OpenRouter process failed: {e}")
-    raise
-  except Exception as e:
-    print(f"[ERROR] Unexpected error running OpenRouter: {e}")
-    raise
-  print("[DEBUG] run_open_router finished")
-
-
-def parse_output():
-  print("[DEBUG] parse_output started")
-  try:
-    if not PARSER_OUTPUT.exists():
-      raise FileNotFoundError(f"Missing output file: {PARSER_OUTPUT}")
-    content = PARSER_OUTPUT.read_text(encoding="utf-8")
-    blocks  = extract_python(content)
-    print(f"[DEBUG] Extracted {len(blocks)} Python code blocks")
-    return blocks
-  except Exception as e:
-    print(f"[ERROR] Failed to parse output: {e}")
-    return []
-  finally:
-    print("[DEBUG] parse_output finished")
-
-
-def make_code(prompt: str):
+def make_code(prompt: str, options: dict):
   print("[DEBUG] make_code started")
   try:
-    write_prompt(prompt)
-    run_open_router()
-    code_blocks = parse_output()
-    result      = {"status": "ok", "code": code_blocks}
-    print(f"[DEBUG] make_code result: {result}")
+    print("[DEBUG] calling extract_python with fixed code")
+    result = extract_python("""
+```python
+def foo():
+  return 42
+```
+""")
+    print("[DEBUG] extract_python returned:", result)
     return result
   except Exception as e:
-    print(f"[ERROR] make_code failed: {e}")
-    return {"status": "error", "error": str(e)}
-  finally:
-    print("[DEBUG] make_code finished")
+    print("[ERROR] exception in make_code:", repr(e))
+    raise
 
 
 if __name__ == "__main__":
-  demo_prompt = "Write a Python program that prints Hello World"
-  make_code(demo_prompt)
+  print("[DEBUG] __main__ entrypoint started")
+  try:
+    output = make_code("test prompt", {})
+    print("[DEBUG] make_code output:", output)
+  except Exception as e:
+    print("[ERROR] exception in __main__:", repr(e))
